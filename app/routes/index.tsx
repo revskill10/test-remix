@@ -1,7 +1,6 @@
 import React from "react";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { Thing } from "@truongteam/authz-ui";
 const Test = React.lazy(() => import('~/components/test'));
 
