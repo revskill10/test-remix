@@ -4,6 +4,7 @@ import { RemixServer } from "@remix-run/react";
 import type { EntryContext , Headers } from "@remix-run/node";
 import { Response } from "@remix-run/node";
 import isbot from "isbot";
+import { renderStylesToNodeStream } from '@emotion/server'
 
 const ABORT_DELAY = 5000;
 
@@ -13,6 +14,7 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
+
   const callbackName = isbot(request.headers.get("user-agent"))
     ? "onAllReady"
     : "onShellReady";
@@ -29,12 +31,13 @@ export default function handleRequest(
           responseHeaders.set("Content-Type", "text/html");
 
           resolve(
-            new Response(body, {
+            new Response(body.pipe(renderStylesToNodeStream()), {
               status: didError ? 500 : responseStatusCode,
               headers: responseHeaders,
             })
           );
-          pipe(body);
+          pipe(body).pipe(renderStylesToNodeStream())
+          ;
         },
         onShellError(err) {
           reject(err);
