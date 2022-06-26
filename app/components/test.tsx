@@ -1,5 +1,22 @@
-import React from "react";
+import React from 'react'
+import fetchData from '~/utils/fetch-data'
 
-const Main = () => <div>Lazy</div>
+const resource = fetchData(
+  'https://run.mocky.io/v3/d6ac91ac-6dab-4ff0-a08e-9348d7deed51'
+)
 
-export default Main
+const UserWelcome = () => {
+  const userDetails = resource.read()
+
+  return (
+    <div>
+      <p>
+        Welcome <span className="user-name">{userDetails.name}</span>, here are
+        your Todos for today
+      </p>
+      <small>Completed todos have a line through them</small>
+    </div>
+  )
+}
+
+export default UserWelcome

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { Thing } from "@truongteam/authz-ui";
@@ -22,7 +22,9 @@ export default function Index() {
   const { posts } = useLoaderData();
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <Test />
+      <Suspense fallback={<p>Loading user details...</p>}>
+        <Test />
+      </Suspense>
 <Thing />
       <ul>
         {posts.map((post: any) => (
