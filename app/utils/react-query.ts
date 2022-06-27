@@ -7,3 +7,5 @@ export const createQueryClient = ({ suspense = true }) => new QueryClient({
      },
    },
  })
+
+export const client = createQueryClient({ suspense: true });
