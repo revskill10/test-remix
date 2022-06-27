@@ -10,6 +10,7 @@ import {
 } from "@remix-run/react";
 import { extendTheme, ChakraProvider } from '@chakra-ui/react'
 import { Suspense } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const colors = {
   brand: {
@@ -35,7 +36,7 @@ export const meta: MetaFunction = () => ({
   title: "New Remix App",
   viewport: "width=device-width,initial-scale=1",
 });
-
+const queryClient = new QueryClient();
 export default function App() {
   return (
     <html lang="en">
@@ -46,7 +47,9 @@ export default function App() {
       <body>
         <ChakraProvider theme={theme}>
         <Suspense fallback={<div>Loading...</div>}>
+        <QueryClientProvider client={queryClient}>
         <Outlet />
+        </QueryClientProvider>
         </Suspense>
         </ChakraProvider>
         <ScrollRestoration />
