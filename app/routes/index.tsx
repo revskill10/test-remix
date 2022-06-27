@@ -1,43 +1,26 @@
 import React, { Suspense } from "react";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
 import { Thing } from "@truongteam/authz-ui";
+import { dehydrate, Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { key, fetchResource } from '~/hooks/use-data';
+import { useLoaderData } from "@remix-run/react";
 const Test = React.lazy(() => import('~/components/test'));
-
+const queryClient = new QueryClient()
 export const loader = async () => {
-  return json({
-    posts: [
-      {
-        slug: "my-first-post",
-        title: "My First Post",
-      },
-      {
-        slug: "90s-mixtape",
-        title: "A Mixtape I Made Just For You",
-      },
-    ],
-  });
+  await queryClient.prefetchQuery(key, fetchResource)
+  return json({ qData: dehydrate(queryClient) });
 };
 export default function Index() {
-  const { posts } = useLoaderData();
+  const data = useLoaderData();
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <Suspense fallback={<p>Loading user details...</p>}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={data.qData}>
         <Test />
-      </Suspense>
+        <Test />
+        </Hydrate>
+        </QueryClientProvider>
 <Thing />
-      <ul>
-        {posts.map((post: any) => (
-          <li key={post.slug}>
-            <Link
-              to={post.slug}
-              className="text-blue-600 underline"
-            >
-              {post.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
