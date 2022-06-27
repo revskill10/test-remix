@@ -1,3 +1,4 @@
+import React from "react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -5,10 +6,11 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration,
+  ScrollRestoration
 } from "@remix-run/react";
 import { extendTheme, ChakraProvider } from '@chakra-ui/react'
 import { Suspense } from "react";
+
 const colors = {
   brand: {
     900: '#1a365d',

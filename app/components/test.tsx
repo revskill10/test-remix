@@ -1,13 +1,9 @@
 import React from 'react'
-import fetchData from '~/utils/fetch-data'
-
-const resource = fetchData(
-  'https://run.mocky.io/v3/d6ac91ac-6dab-4ff0-a08e-9348d7deed51'
-)
-
+import { useData } from '~/hooks/use-data'
 const UserWelcome = () => {
-  const userDetails = resource.read()
+  const { data: userDetails, error } = useData({ suspense: true })
 
+  if (error) return <div>Error</div>
   return (
     <div>
       <p>
