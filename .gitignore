@@ -4,8 +4,10 @@ node_modules
 .env
 .vercel
 .output
-
+*.env
 /build/
 /public/build
 /api/index.js
 /api/index.js.map
+dev.db
+dev.db-journal
