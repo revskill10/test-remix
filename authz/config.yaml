@@ -1,0 +1,7 @@
+---
+server:
+  httpListenAddr: ":80"
+storage:
+  driver: "disk"
+  disk:
+    directory: ./policies
